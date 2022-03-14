@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block content %}
+<section id="intro" class="clearfix">
+    <main id="main">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card bg-shadow-lite rounded">
+                    <div class="card-body">
+
+                        <div id="productListToolbar">
+                            <div class="col-sm-12 pl-0">
+                                <button type="button" class="btn btn-block btn-primary"><i class="fa fa-plus"></i></button>
+                            </div>
+
+                        </div>
+                        <table id="ProductTable" data-toggle="table" data-toolbar="#productListToolbar"
+                            data-ajex="productList" data-search="true" data-trim-on-search="true"
+                            data-side-pagination="true" data-pagination="true" data-filter-control="true"
+                            data-filter-show-clear="true" data-show-refresh="true" data-server-sort="false"
+                            data-show-export="ture" data-mobile-responsive="true" data-page-list="[10,25,50,100]"
+                            data-search="true" data-side-pagination="server" data-pagination="true">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th data-field="id">ID</th>
+                                    <th data-field="name">Item Name</th>
+                                    <th data-field="image">Image</th>
+                                    <th data-field="price">Item Price</th>
+                                    <th data-field="category">Category</th>
+                                    <th data-field="action">Action</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</section>
+<script>
+    // your custom ajax request here
+    function productList(params) {
+
+        $.ajex({
+            url: "products/",
+            type: "get",
+            data: {
+                "params": JSON.stringify(params["data"])
+            },
+            success: function (data) {
+                params.success({
+                    total: data["count"],
+                    rows: data["data"]
+                })
+            }
+        })
+    }
+</script>
+{% endblock content %}
