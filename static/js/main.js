@@ -80,20 +80,20 @@
   });
 })
 
-function productList(params) {
+// function productList(params) {
 
-  $.ajax({
-    url: "{% url 'products' %}",
-    type: "get",
-    data: {
-      "action": 1,
-      "params": JSON.stringify(params["data"])
-    },
-    success: function (data) {
-      params.success({
-        total: data["count"],
-        rows: data["data"]
-      })
-    }
-  })
-}
+//   $.ajax({
+//     url: "{% url 'products' %}",
+//     type: "get",
+//     data: {
+//       "action": 1,
+//       "params": JSON.stringify(params["data"])
+//     },
+//     success: function (data) {
+//       params.success({
+//         total: data["count"],
+//         rows: data["data"]
+//       })
+//     }
+//   })
+// }
