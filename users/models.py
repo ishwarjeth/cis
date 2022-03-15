@@ -26,7 +26,7 @@ class User(AbstractBaseUser,PermissionsMixin):
         return self.email
 
 class Category(models.Model):
-    name = models.CharField(max_length=50,verbose_name="Category",blank=True,null=True)
+    name = models.CharField(max_length=50,verbose_name="Category",blank=True,null=True,unique=True)
     def __str__(self) -> str:
         return self.name
 
@@ -37,6 +37,12 @@ class Products(models.Model):
     price = models.DecimalField(max_digits=10,decimal_places=2,verbose_name="Price",blank=True)
     category = models.ForeignKey(Category,on_delete=models.CASCADE,blank=True,null=True)
     p_discription = models.TextField()
+    timestamp = models.DateField(auto_now_add=True,blank=True,null=True)
+
+    def __str__(self) -> str:
+        return self.p_name
+    class Meta:
+        ordering = ["-timestamp"]
 
 class ImageList(models.Model):
     img = models.URLField(blank=True,null=True)
