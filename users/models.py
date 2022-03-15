@@ -45,6 +45,7 @@ class Products(models.Model):
         ordering = ["-timestamp"]
 
 class ImageList(models.Model):
+    product = models.ForeignKey(Products,on_delete=models.CASCADE,null=True,blank=True)
     img = models.URLField(blank=True,null=True)
     def __str__(self) -> str:
         return self.img

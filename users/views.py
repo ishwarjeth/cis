@@ -48,7 +48,10 @@ class ProductView(APIView):
         arr = []
 
         for product in products:
+            image = ImageList.objects.filter(product=product)
             new_dict = {
+                "image":f'<img src="{image.first().img}">',
+                "id":product.id,
                 'name': f'<a class="" style="cursor:pointer" data-id="{product.id}"><h4 class="p-0 m-0 text-bold text-secondary" ">' + product.p_name.title() + '</h4>' + '</a>',
                 'price':f'{product.price}',
                 'category':product.category.name,
@@ -57,6 +60,20 @@ class ProductView(APIView):
             }
             arr.append(new_dict)
         self.ctx.update({'data': arr, 'count': count})
+    def post(self,request):
+        self.data = request.POST
+        if 'action' in self.data:
+            action = int(self.data['action'])
+            action_mapper = {1:self.create_product}
+            status = action_mapper.get(action, lambda: 'Invalid')()
+            if status == 'Invalid':
+                self.ctx = {'status': 'error', 'msg': 'Invalid Action'}
+            return Response(self.ctx)
+        return self.base_context.render(request, self.template_name)
+    def create_product(self):
+        pass
+
+
 
 
         
